@@ -8,3 +8,5 @@ p
 +30G
 w
 EOF
+
+partprobe
