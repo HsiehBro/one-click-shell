@@ -1,9 +1,12 @@
 #!/bin/bash
 
+. /etc/os-release
 CONFIG_DIR=/etc/yum.repos.d
+arch=`arch`
+releasever=${VERSION_ID}
 
 mkdir -p ${CONFIG_DIR}/old
-mv ${CONFIG_DIR}/*.repo ${CONFIG_DIR}/old/
+mv ${CONFIG_DIR}/*.repo ${CONFIG_DIR}/old/ 2>/dev/null
 
 cat <<EOF > base.repo
 [base]
