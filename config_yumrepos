@@ -5,6 +5,13 @@ CONFIG_DIR=/etc/yum.repos.d
 mkdir -p ${CONFIG_DIR}/old
 mv ${CONFIG_DIR}/*.repo ${CONFIG_DIR}/old/
 
+cat <<EOF > base.repo
+[base]
+name=aliyun base repo
+baseurl=https://mirrors.aliyun.com/centos/${releasever}/os/${arch}/
+gpgcheck=1
+gpgkey=https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-${releasever}
+
 cat <<EOF > epel.repo
 [epel]
 name=aliyun epel repo
