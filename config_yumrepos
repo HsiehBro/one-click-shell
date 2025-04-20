@@ -19,4 +19,4 @@ baseurl=https://mirrors.aliyun.com/epel/${releasever}/${arch}/
 gpgcheck=1
 gpgkey=https://mirrors.aliyun.com/epel/RPM-GPG-KEY-EPEL-${releasever}
 
-mv epel.repo ${CONFIG_DIR}/
+mv {base,epel}.repo ${CONFIG_DIR}/
