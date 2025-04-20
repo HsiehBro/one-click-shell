@@ -24,3 +24,5 @@ name=aliyun epel repo
 baseurl=https://mirrors.aliyun.com/epel/${releasever}/${arch}/
 gpgcheck=1
 gpgkey=https://mirrors.aliyun.com/epel/RPM-GPG-KEY-EPEL-${releasever}
+
+yum repolist
