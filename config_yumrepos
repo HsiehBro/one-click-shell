@@ -1,0 +1,15 @@
+#!/bin/bash
+
+CONFIG_DIR=/etc/yum.repos.d
+
+mkdir -p ${CONFIG_DIR}/old
+mv ${CONFIG_DIR}/*.repo ${CONFIG_DIR}/old/
+
+cat <<EOF > epel.repo
+[epel]
+name=aliyun epel repo
+baseurl=https://mirrors.aliyun.com/epel/${releasever}/${arch}/
+gpgcheck=1
+gpgkey=https://mirrors.aliyun.com/epel/RPM-GPG-KEY-EPEL-${releasever}
+
+mv epel.repo ${CONFIG_DIR}/
