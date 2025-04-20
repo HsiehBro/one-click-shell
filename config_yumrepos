@@ -5,9 +5,12 @@ CONFIG_DIR=/etc/yum.repos.d
 arch=`arch`
 releasever=${VERSION_ID}
 
-mkdir -p ${CONFIG_DIR}/old
+if [ -e ${CONFIG_DIR}/old ];then
+  mkdir -p ${CONFIG_DIR}/old;
+fi
 mv ${CONFIG_DIR}/*.repo ${CONFIG_DIR}/old/ 2>/dev/null
 
+cd ${CONFIG_DIR}
 cat <<EOF > base.repo
 [base]
 name=aliyun base repo
@@ -21,5 +24,3 @@ name=aliyun epel repo
 baseurl=https://mirrors.aliyun.com/epel/${releasever}/${arch}/
 gpgcheck=1
 gpgkey=https://mirrors.aliyun.com/epel/RPM-GPG-KEY-EPEL-${releasever}
-
-mv {base,epel}.repo ${CONFIG_DIR}/
