@@ -8,7 +8,7 @@ NGINX_NAME=`basename ${DOWNLOAD_LINK} .tar.gz`
 
 cd ${DOWNLOAD_DIR}
 if [ ! -e ${NGINX_NAME}.tar.gz ];then
-  wget ${DOWNLOAD_LINK} -P ${DOWNLOAD_DIR} && echo "nginx download sucessful..." || { echo "nginx download failed!!!";exit 400 };
+  wget ${DOWNLOAD_LINK} -P ${DOWNLOAD_DIR} && echo "nginx download sucessful..." || { echo "nginx download failed!!!";exit 400; };
 elif [ ! -e ${NGINX_NAME} ];then
   tar -xf ${NGINX_NAME}.tar.gz;
 fi
