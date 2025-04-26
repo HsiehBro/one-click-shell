@@ -1,6 +1,5 @@
-#!/bin/bash
-
-set -u
+#!/usr/bin/env bash
+set -euo pipefail
 
 . /etc/os-release
 CONFIG_DIR="/etc/yum.repos.d"
