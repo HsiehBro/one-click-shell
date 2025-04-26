@@ -3,20 +3,31 @@
 set -u
 
 . /etc/os-release
-CONFIG_DIR=/etc/yum.repos.d
-arch="$(arch)"
-releasever="${VERSION_ID}"
+CONFIG_DIR="/etc/yum.repos.d"
+ARCH="$(uname -m)"
+RELEASEVER="${VERSION_ID}"
 
-if [ ! -e "${CONFIG_DIR}/old" ]; then
-  mkdir -p "${CONFIG_DIR}/old"
-fi
-mv "${CONFIG_DIR}/*.repo" "${CONFIG_DIR}/old/" 2>/dev/null
+BACKUP_DIR="${CONFIG_DIR}/old"
+mkdir -p "${BACKUP_DIR}"
+shopt -s nullglob
+for repo in "${CONFIG_DIR}"/*.repo; do
+  mv -v "${repo}" "${BACKUP_DIR}/"
+done
+shopt -u nullglob
 
-if ! grep -q "^/dev/sr0" /proc/mounts; then
-  mount /dev/sr0 /media/cdrom 1>/dev/null 2>1
+CDROM_DEV="/dev/sr0"
+MOUNT_POINT="/media/cdrom"
+if ! grep -qs "^${CDROM_DEV}" /proc/mounts; then
+  mkdir -p "${MOUNT_POINT}"
+  if ! mount /dev/sr0 /media/cdrom >/dev/null 2>&1; then
+    echo "Error: failed to mount ${CDROM_DEV}" >&2
+    exit 1
+  fi
+else
+  echo "${CDROM_DEV} already mounted"
 fi
-cd "${CONFIG_DIR}"
-cat <<EOF > cdrom.repo
+
+cat > "${CONFIG_DIR}/cdrom.repo" << EOF
 [cdrom]
 name='local cdrom repo'
 baseurl="file:///media/cdrom"
@@ -24,7 +35,7 @@ gpgcheck=1
 gpgcheck="file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-${releasever}"
 EOF
 
-cat <<EOF > base.repo
+cat > "${CONFIG_DIR}/base.repo" << EOF
 [base]
 name='aliyun base repo'
 baseurl="https://mirrors.aliyun.com/centos/${releasever}/os/${arch}/"
@@ -32,7 +43,7 @@ gpgcheck=1
 gpgkey="https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-${releasever}"
 EOF
 
-cat <<EOF > epel.repo
+cat > "${CONFIG_DIR}/epel.repo" << EOF
 [epel]
 name='aliyun epel repo'
 baseurl="https://mirrors.aliyun.com/epel/${releasever}/${arch}/"
