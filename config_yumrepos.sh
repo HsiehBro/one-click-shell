@@ -51,4 +51,5 @@ gpgcheck=1
 gpgkey="https://mirrors.aliyun.com/epel/RPM-GPG-KEY-EPEL-${RELEASEVER}"
 EOF
 
+yum makecache >/dev/null
 yum repolist
