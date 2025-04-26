@@ -2,14 +2,17 @@
 
 . /etc/os-release
 CONFIG_DIR=/etc/yum.repos.d
-arch=`arch`
+arch="$(arch)"
 releasever="${VERSION_ID}"
 
-if [ ! -e "${CONFIG_DIR}/old" ];then
-  mkdir -p "${CONFIG_DIR}/old";
+if [ ! -e "${CONFIG_DIR}/old" ]; then
+  mkdir -p "${CONFIG_DIR}/old"
 fi
 mv "${CONFIG_DIR}/*.repo" "${CONFIG_DIR}/old/" 2>/dev/null
 
+if ! grep -q "^/dev/sr0" /proc/mount; then
+  mount /dev/sr0 /media/cdrom
+fi
 cd "${CONFIG_DIR}"
 cat <<EOF > cdrom.repo
 [cdrom]
