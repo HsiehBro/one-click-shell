@@ -5,7 +5,8 @@ set -u
 . /etc/os-release
 CONFIG_DIR="/etc/yum.repos.d"
 ARCH="$(uname -m)"
-RELEASEVER="${VERSION_ID}"
+# string replace //VAR/SRC/TARGET
+RELEASEVER="${VERSION_ID//\"/}"
 
 BACKUP_DIR="${CONFIG_DIR}/old"
 mkdir -p "${BACKUP_DIR}"
@@ -32,7 +33,7 @@ cat > "${CONFIG_DIR}/cdrom.repo" << EOF
 name='local cdrom repo'
 baseurl="file:///media/cdrom"
 gpgcheck=1
-gpgcheck="file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-${releasever}"
+gpgkey="file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-${releasever}"
 EOF
 
 cat > "${CONFIG_DIR}/base.repo" << EOF
