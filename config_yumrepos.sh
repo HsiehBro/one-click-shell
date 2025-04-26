@@ -29,26 +29,26 @@ fi
 
 cat > "${CONFIG_DIR}/cdrom.repo" << EOF
 [cdrom]
-name='local cdrom repo'
+name=Local CD-ROM Repository
 baseurl="file:///media/cdrom"
 gpgcheck=1
-gpgkey="file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-${releasever}"
+gpgkey="file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-${RELEASEVER}"
 EOF
 
 cat > "${CONFIG_DIR}/base.repo" << EOF
 [base]
-name='aliyun base repo'
-baseurl="https://mirrors.aliyun.com/centos/${releasever}/os/${arch}/"
+name=Aliyun Base Repository
+baseurl="https://mirrors.aliyun.com/centos/${RELEASEVER}/os/${ARCH}/"
 gpgcheck=1
-gpgkey="https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-${releasever}"
+gpgkey="https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-${RELEASEVER}"
 EOF
 
 cat > "${CONFIG_DIR}/epel.repo" << EOF
 [epel]
-name='aliyun epel repo'
-baseurl="https://mirrors.aliyun.com/epel/${releasever}/${arch}/"
+name=Aliyun EPEL Repository
+baseurl="https://mirrors.aliyun.com/epel/${RELEASEVER}/${ARCH}/"
 gpgcheck=1
-gpgkey="https://mirrors.aliyun.com/epel/RPM-GPG-KEY-EPEL-${releasever}"
+gpgkey="https://mirrors.aliyun.com/epel/RPM-GPG-KEY-EPEL-${RELEASEVER}"
 EOF
 
 yum repolist
