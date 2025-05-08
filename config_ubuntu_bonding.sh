@@ -26,4 +26,4 @@ network:
 EOF
 
 sudo netplan apply
-sudo cat "/proc/net/bonding/${BONDING_NAME}"
+cat "/proc/net/bonding/${BONDING_NAME}"
