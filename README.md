@@ -4,6 +4,11 @@
 
 ## networking
 
+view the system's default network service
+```bash
+systemctl list-units --type=service | grep -P "NetworkManager|networkd|networking"
+```
+
 <details>
   
   <summary>NetworkManager.service</summary>
