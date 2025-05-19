@@ -3,6 +3,7 @@
 > run once, get everything
 
 ## networking
+
 <details>
   
   <summary>CentOS</summary>
@@ -45,3 +46,14 @@
   ```
 
 </details>
+
+### Bonding
+
+```bash
+nmcli dev
+nmcli con add type bond ifname bond0 con-name con-bond0 mode active-backup ip4 10.0.0.100/24 gw4 10.0.0.254
+nmcli con add type bond-slave  ifname eth1 con-name bond0-slave-eth1 master bond0
+nmcli con add type bond-slave  ifname eth2 con-name bond0-slave-eth1 master bond0
+nmcli con reload
+```
+
