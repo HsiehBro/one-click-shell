@@ -6,9 +6,11 @@
 
 <details>
   
-  <summary>CentOS</summary>
+  <summary>NetworkManager.service</summary>
   
   ```bash
+  # yum install -y NetworkManager && yum install -y network-manager
+  # sed -i '/^\[ifupdown\]/,/^\[/{s/^managed=.*/managed=true/}' /etc/NetworkManager/NetworkManager.conf
   nmcli con add type ethernet ifname eth0 con-name con-eth0 ip4 10.0.0.100/24 gw4 10.0.0.254 ipv4.dns 223.5.5.5
   nmcli con reload
   nmcli con up con-eth0
@@ -17,25 +19,39 @@
 </details>
 <details>
   
-  <summary>Ubuntu</summary>
+  <summary>systemd-networkd.service</summary>
   
   ```bash
-  sudo apt install -y network-manager
-  sudo sed -i '/^\[ifupdown\]/,/^\[/{s/^managed=.*/managed=true/}' /etc/NetworkManager/NetworkManager.conf
-  sudo nmcli con add type ethernet ifname eth0 con-name con-eth0 ip4 10.0.0.100/24 gw4 10.0.0.254 ipv4.dns 223.5.5.5
-  sudo nmcli con reload
-  sudo nmcli con up con-eth0
+  # sudo apt install -y systemd
+  cat > "/etc/systemd/network/00-eth0.network" << EOF
+  [Match]
+  Name=eth0
+  
+  [Network]
+  # DHCP=yes
+  Address=192.168.1.100/24
+  Gateway=192.168.1.1
+  DNS=8.8.8.8
+  DNS=1.1.1.1
+  
+  [Route]
+  Destination=10.10.0.0/16
+  Gateway=192.168.1.254
+  
+  EOF
   ```
 
 </details>
 <details>
   
-  <summary>Debian</summary>
+  <summary>networking.service</summary>
   
   ```bash
+  # apt install -y ifupdown
   ifdown ens33
   cat > "/etc/network/interfaces.d/eth0.cfg" <<EOF
   auto eth0
+  # iface eth0 inet auto
   iface eth0 inet static
     address 10.0.0.100
     netmask 255.255.255.0
