@@ -7,7 +7,8 @@
 modify the default network card name starting from eth0
 ```bash
 sed -i 's/^\(GRUB_CMDLINE_LINUX=".*\)"/\1 net.ifnames=0"/' /etc/default/grub
-grub2-mkconfig -o /boot/grub2/grub.cfg
+grub2-mkconfig -o /boot/grub2/grub.cfg || grub-mkconfig -o /boot/grub/grub.cfg
+reboot
 ```
 
 view the system's default network service
