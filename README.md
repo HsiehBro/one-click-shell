@@ -14,7 +14,7 @@ systemctl list-units --type=service | grep -P "NetworkManager|networkd|networkin
   <summary>NetworkManager.service</summary>
   
   ```bash
-  # yum install -y NetworkManager && yum install -y network-manager
+  # yum install -y NetworkManager || yum install -y network-manager
   # sed -i '/^\[ifupdown\]/,/^\[/{s/^managed=.*/managed=true/}' /etc/NetworkManager/NetworkManager.conf
   nmcli con add type ethernet ifname eth0 con-name con-eth0 ip4 10.0.0.100/24 gw4 10.0.0.254 ipv4.dns 223.5.5.5
   nmcli con reload
