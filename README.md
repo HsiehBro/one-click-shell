@@ -78,3 +78,12 @@ nmcli con add type bond-slave  ifname eth2 con-name bond0-slave-eth1 master bond
 nmcli con reload
 ```
 
+### Bridge
+
+```bash
+# yum install -y bridge-utils
+brctl addbr br0
+brctl addif br0 eth1
+brctl show
+```
+
