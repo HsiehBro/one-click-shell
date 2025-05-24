@@ -45,4 +45,4 @@ EOF
 systemctl daemon-reload
 systemctl enable nginx.service --now
 
-echo -e "\e[30;31sucess\e[0m install"
+echo -e "\e[40;32m200 --------------------------------------------------- [ OK ]\e[0m"
