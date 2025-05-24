@@ -14,7 +14,7 @@ if [ ! -e "${DOWNLOAD_DIR}/${NGINX_NAME}.tar.gz" ];then
 fi
 
 if [ ! -e "${DOWNLOAD_DIR}/${NGINX_NAME}" ];then
-  tar -xf "${DOWNLOAD_DIR}/${NGINX_NAME}.tar.gz";
+  tar -xf "${DOWNLOAD_DIR}/${NGINX_NAME}.tar.gz" -C "${DOWNLOAD_DIR}/${NGINX_NAME}"
 fi
 
 cd "${DOWNLOAD_DIR}/${NGINX_NAME}"
