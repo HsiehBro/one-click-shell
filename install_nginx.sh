@@ -14,7 +14,7 @@ if [ ! -e "${DOWNLOAD_DIR}/${NGINX_NAME}.tar.gz" ];then
 fi
 
 if [ ! -e "${DOWNLOAD_DIR}/${NGINX_NAME}" ];then
-  tar -xf "${DOWNLOAD_DIR}/${NGINX_NAME}.tar.gz" -C "${DOWNLOAD_DIR}/${NGINX_NAME}"
+  tar -xf "${DOWNLOAD_DIR}/${NGINX_NAME}.tar.gz" -C "${DOWNLOAD_DIR}"
 fi
 
 cd "${DOWNLOAD_DIR}/${NGINX_NAME}"
@@ -34,10 +34,10 @@ After=network.target
 
 [Service]
 Type=forking
-ExecStart="/opt/${NGINX_NAME}"/sbin/nginx
-ExecReload="/opt/${NGINX_NAME}"/sbin/nginx -s reload
-ExecStop="/opt/${NGINX_NAME}"/sbin/nginx -s quit
-PIDFile="/opt/${NGINX_NAME}"/logs/nginx.pid
+ExecStart="/opt/${NGINX_NAME}/sbin/nginx"
+ExecReload="/opt/${NGINX_NAME}/sbin/nginx -s reload"
+ExecStop="/opt/${NGINX_NAME}/sbin/nginx -s quit"
+PIDFile="/opt/${NGINX_NAME}/logs/nginx.pid"
 Restart=on-failure
 
 [Install]
