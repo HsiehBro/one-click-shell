@@ -12,10 +12,12 @@ INSTALL_DIR="/opt/${NGINX_NAME}"
 if [ ! -e "${DOWNLOAD_DIR}/${NGINX_NAME}.tar.gz" ];then
   wget "${DOWNLOAD_LINK}" -P "${DOWNLOAD_DIR}" && echo "nginx download sucessful..." || { echo "nginx download failed!!!";exit 400; };
 fi
+
 if [ ! -e "${DOWNLOAD_DIR}/${NGINX_NAME}" ];then
-  tar -xf "${NGINX_NAME}.tar.gz";
+  tar -xf "${DOWNLOAD_DIR}/${NGINX_NAME}.tar.gz";
 fi
 
+cd "${DOWNLOAD_DIR}/${NGINX_NAME}"
 ./configure --prefix="${INSTALL_DIR}" --with-http_ssl_module
 make -j "$(grep -c processor /proc/cpuinfo)" && make install
 
