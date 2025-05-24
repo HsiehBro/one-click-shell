@@ -42,4 +42,7 @@ Restart=on-failure
 WantedBy=multi-user.target
 EOF
 
+systemctl daemon-reload
+systemctl enable nginx.service --now
+
 echo -e "\e[30;31sucess\e[0m install"
