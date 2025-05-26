@@ -34,7 +34,6 @@ systemctl list-units --type=service | grep -P "NetworkManager|networkd|networkin
   <summary>systemd-networkd.service</summary>
   
   ```bash
-  # sudo apt install -y systemd
   cat > "/etc/systemd/network/00-eth0.network" << EOF
   [Match]
   Name=eth0
@@ -43,7 +42,7 @@ systemctl list-units --type=service | grep -P "NetworkManager|networkd|networkin
   # DHCP=yes
   Address=192.168.1.100/24
   Gateway=192.168.1.1
-  DNS=8.8.8.8
+  DNS=223.5.5.5
   DNS=1.1.1.1
   
   [Route]
@@ -51,6 +50,9 @@ systemctl list-units --type=service | grep -P "NetworkManager|networkd|networkin
   Gateway=192.168.1.254
   
   EOF
+
+  networkctl reload
+  networkctl status
   ```
 
 </details>
@@ -93,4 +95,11 @@ brctl addbr br0
 brctl addif br0 eth1
 brctl show
 ```
+## time
 
+```bash
+date -R
+systemctl set-timezone Asia/Shanghai
+systemctl status
+clock -w
+```
