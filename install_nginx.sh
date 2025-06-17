@@ -27,7 +27,7 @@ if [ $? -ne 0 ];then
   exit 400
 fi
 
-cat > "/etc/systemd/system/nginx.service" <<EOF
+cat > "/lib/systemd/system/nginx.service" <<EOF
 [Unit]
 Description=The NGINX HTTP and reverse proxy server
 After=network.target
