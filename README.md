@@ -2,7 +2,7 @@
 
 > run once, get everything
 
-## networking
+## Networking
 
 modify the default network card name starting from eth0
 ```bash
@@ -72,7 +72,7 @@ systemctl list-units --type=service | grep -P "NetworkManager|networkd|networkin
 
 </details>
 
-### Bonding
+### bond
 
 ```bash
 nmcli dev
@@ -82,7 +82,7 @@ nmcli con add type bond-slave  ifname eth2 con-name bond0-slave-eth1 master bond
 nmcli con reload
 ```
 
-### Bridge
+### bridge
 
 ```bash
 # yum install -y bridge-utils
@@ -90,7 +90,8 @@ brctl addbr br0
 brctl addif br0 eth1
 brctl show
 ```
-## time
+
+## Time
 
 ### timezone
 
