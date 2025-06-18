@@ -6,7 +6,7 @@
 
 modify the default network card name starting from eth0
 ```bash
-sed -i 's/^\(GRUB_CMDLINE_LINUX=".*\)"/\1 net.ifnames=0"/' /etc/default/grub
+sed -Ei 's/^(GRUB_CMDLINE_LINUX=".*)"/\1 net.ifnames=0"/' /etc/default/grub
 grub2-mkconfig -o /boot/grub2/grub.cfg || grub-mkconfig -o /boot/grub/grub.cfg
 reboot
 ```
@@ -24,7 +24,6 @@ systemctl list-units --type=service | grep -P "NetworkManager|networkd|networkin
   # yum install -y NetworkManager || yum install -y network-manager
   # sed -i '/^\[ifupdown\]/,/^\[/{s/^managed=.*/managed=true/}' /etc/NetworkManager/NetworkManager.conf
   nmcli con add type ethernet ifname eth0 con-name con-eth0 ip4 10.0.0.100/24 gw4 10.0.0.254 ipv4.dns 223.5.5.5
-  nmcli con reload
   nmcli con up con-eth0
   ```
 
@@ -34,25 +33,21 @@ systemctl list-units --type=service | grep -P "NetworkManager|networkd|networkin
   <summary>systemd-networkd.service</summary>
   
   ```bash
-  cat > "/etc/systemd/network/00-eth0.network" << EOF
-  [Match]
-  Name=eth0
-  
-  [Network]
-  # DHCP=yes
-  Address=192.168.1.100/24
-  Gateway=192.168.1.1
-  DNS=223.5.5.5
-  DNS=1.1.1.1
-  
-  [Route]
-  Destination=10.10.0.0/16
-  Gateway=192.168.1.254
-  
+  cat > "/etc/netplan/00-eth0.conf" << EOF
+  network:
+    ethernets:
+      eth0:
+        addresses:
+          - "10.0.0.1/24"
+        routes:
+          - to: default
+            via: 10.0.0.254
+        nameservers:
+          search: [hsieh.com] 
+          addresses: [223.5.5.5,223.6.6.6]  
   EOF
 
-  networkctl reload
-  networkctl status
+  netplan apply
   ```
 
 </details>
@@ -97,9 +92,26 @@ brctl show
 ```
 ## time
 
+### timezone
+
 ```bash
 date -R
 systemctl set-timezone Asia/Shanghai
 systemctl status
 clock -w
 ```
+
+### chrony
+
+```bash
+# SERVER
+# yum install -y chrony
+systemctl enable --now chronyd
+vim /etc/chrony.conf
+  server ntp.aliyun.com iburst
+  allow 0.0.0.0/0
+  local startum 10
+systemctl restart chronyd
+chronyc sources -v
+```
+
