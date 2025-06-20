@@ -24,6 +24,7 @@ systemctl list-units --type=service | grep -P "NetworkManager|networkd|networkin
   # yum install -y NetworkManager || yum install -y network-manager
   # sed -i '/^\[ifupdown\]/,/^\[/{s/^managed=.*/managed=true/}' /etc/NetworkManager/NetworkManager.conf
   nmcli con add type ethernet ifname eth0 con-name con-eth0 ip4 10.0.0.100/24 gw4 10.0.0.254 ipv4.dns 223.5.5.5
+  nmci con mod con-eth0 +ipv4.routes "20.0.0.0/24 10.0.0.254"
   nmcli con up con-eth0
   ```
 
@@ -116,3 +117,12 @@ systemctl restart chronyd
 chronyc sources -v
 ```
 
+## Package Management
+
+### YUM
+```bash
+yum install -y yum-utils createrepo
+# yum downgrade -y gcc glibc
+reposync --repoid=epel -p /var/www/html/centos/x86_64/
+createrepo --workers=$(grep -c processor /proc/cpuinfo) --update /var/www/html/centos/x86_64/epel/
+```
