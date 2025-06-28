@@ -114,6 +114,7 @@ vim /etc/chrony.conf
   allow 0.0.0.0/0
   local startum 10
 systemctl restart chronyd
+# chronyc makestep
 chronyc sources -v
 ```
 
