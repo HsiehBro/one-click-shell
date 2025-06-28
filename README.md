@@ -127,3 +127,11 @@ yum install -y yum-utils createrepo
 reposync --repoid=epel -p /var/www/html/centos/x86_64/
 createrepo --workers=$(grep -c processor /proc/cpuinfo) --update /var/www/html/centos/x86_64/epel/
 ```
+
+## Remote Login
+
+```bash
+ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
+ssh-copy-id 127.0.0.1
+scp -o StrictHostKeyChecking=no -r .ssh 30.0.0.1:
+```
